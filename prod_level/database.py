@@ -6,7 +6,9 @@ from sqlalchemy.orm import sessionmaker
 
 load_dotenv()
 
-SQLALCHEMY_DATABASE_URL = os.getenv("DATABASE_URL", "postgresql://postgres:password@localhost/fastapi")
+database_url = os.getenv("DATABASE_URL", "postgresql://postgres:password@localhost/fastapi")
+# Convert postgres:// to postgresql:// for SQLAlchemy compatibility
+SQLALCHEMY_DATABASE_URL = database_url.replace("postgres://", "postgresql://")
 
 engine = create_engine(SQLALCHEMY_DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
